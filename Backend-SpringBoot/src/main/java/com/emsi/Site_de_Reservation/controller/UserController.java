@@ -1,22 +1,26 @@
 package com.emsi.Site_de_Reservation.controller;
 
+import com.emsi.Site_de_Reservation.DTO.UserDTO;
 import com.emsi.Site_de_Reservation.model.Role;
 import com.emsi.Site_de_Reservation.model.User;
 import com.emsi.Site_de_Reservation.repository.UserRepository;
 import com.emsi.Site_de_Reservation.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.ui.Model;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/user")
 public class UserController {
     @Autowired
     private final UserService userService;
@@ -27,7 +31,7 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @PostMapping("/register")
+    @PostMapping("/user/register")
     public ResponseEntity<String> createUser(HttpServletRequest request,
                                                  @RequestParam("first_name") String first_name,
                                                  @RequestParam("last_name") String last_name,
@@ -47,9 +51,9 @@ public class UserController {
         if (userService.existsByEmail(email)) {
             return ResponseEntity.badRequest().body("E-mail déjà utilisé !");
         }
-           // Convertion du user avatar en bytes
-           byte[] avatar_bytes = user_avatar_file.getBytes();
-           Blob avatar_blob = new javax.sql.rowset.serial.SerialBlob(avatar_bytes);
+            // Convertion du user avatar en bytes
+            byte[] avatar_bytes = user_avatar_file.getBytes();
+            Blob avatar_blob = new javax.sql.rowset.serial.SerialBlob(avatar_bytes);
 
             // Convertion du user cover en bytes
             byte[] cover_bytes = user_cover_file.getBytes();
@@ -68,13 +72,54 @@ public class UserController {
             return ResponseEntity.ok("Compte créer avec succées :)");
     }
 
-    @GetMapping("/profile/{id}")
-    Optional<User> getUserById(@PathVariable long id)
-    {
-        return userRepository.findById(id);
+    @GetMapping("/user/{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+        Optional<User> userOptional = Optional.ofNullable(userService.getUserById(id));
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        try {
+            User user = userOptional.get();
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(user.getId());
+            userDTO.setFirstName(user.getFirst_name());
+            userDTO.setLastName(user.getLast_name());
+            userDTO.setUsername(user.getUsername());
+            userDTO.setEmail(user.getEmail());
+            userDTO.setUserAvatar(blobToByteArray(user.getUser_avatar()));
+            userDTO.setUserCover(blobToByteArray(user.getUser_cover()));
+            userDTO.setRole(user.getRole());
+
+            return ResponseEntity.ok(userDTO);
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();  // Handle or log the exception as needed
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
+    private byte[] blobToByteArray(Blob blob) throws SQLException, IOException {
+        if (blob == null) {
+            return null;
+        }
 
+        try (InputStream inputStream = blob.getBinaryStream();
+             ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            return outputStream.toByteArray();
+        }
+    }
+
+    @GetMapping("/users")
+    public String showUsers(Model model){
+        List<User> users = userRepository.findAll();
+        model.addAttribute("users", users);
+        return "users";
+    }
 
     /*
     @PostMapping(value = "/loginnnn", consumes = "application/json")

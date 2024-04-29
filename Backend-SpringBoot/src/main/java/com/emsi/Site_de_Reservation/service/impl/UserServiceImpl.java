@@ -1,6 +1,5 @@
 package com.emsi.Site_de_Reservation.service.impl;
 
-import com.emsi.Site_de_Reservation.model.Role;
 import com.emsi.Site_de_Reservation.model.User;
 import com.emsi.Site_de_Reservation.repository.UserRepository;
 import com.emsi.Site_de_Reservation.service.UserService;
@@ -8,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,6 +32,17 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encodedPassword);
         // Enregistrer l'utilisateur dans la base de données
         userRepository.save(user);
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        return userOptional.orElse(null);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     @Override
