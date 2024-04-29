@@ -1,5 +1,6 @@
 package com.emsi.Site_de_Reservation.service.impl;
 
+import com.emsi.Site_de_Reservation.model.Role;
 import com.emsi.Site_de_Reservation.model.User;
 import com.emsi.Site_de_Reservation.repository.UserRepository;
 import com.emsi.Site_de_Reservation.service.UserService;
@@ -29,7 +30,6 @@ public class UserServiceImpl implements UserService {
         // Hashage du mot de passe de l'utilisateur
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-
         // Enregistrer l'utilisateur dans la base de données
         userRepository.save(user);
     }

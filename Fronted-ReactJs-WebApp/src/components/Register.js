@@ -26,7 +26,7 @@ const Register = () => {
 
   const handleRegistration = async (formData) => {
     try {
-      const response = await axios.post("http://localhost:8080/user/register", formData);
+      const response = await axios.post("http://localhost:8080/user/signup", formData);
       console.log("Response from server:", response.data)
       setSuccessMessage("Compte créé avec succès !");
     } catch (error) {
@@ -114,14 +114,14 @@ const Register = () => {
 
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 {/* Champ pour le prenom */}
-                <div className="sm:col-span-9">
+                <div className="sm:col-span-9 mr-5">
                   <label
                     htmlFor="first_name"
                     className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Prénom
                   </label>
-                  <div className="mt-2">
+                  <div className="mt-2 mr-5">
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                       <input
                         type="text"
@@ -138,14 +138,14 @@ const Register = () => {
                 </div>
 
                 {/* Champ pour le Nom */}
-                <div className="sm:col-span-9">
+                <div className="sm:col-span-9 mr-5">
                   <label
                     htmlFor="last_name"
                     className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Nom
                   </label>
-                  <div className="mt-2">
+                  <div className="mt-2 mr-5">
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                       <input
                         type="text"
@@ -162,14 +162,14 @@ const Register = () => {
                 </div>
 
                 {/* Champ pour le nom d'utilisateur */}
-                <div className="sm:col-span-9">
+                <div className="sm:col-span-9 mr-5">
                   <label
                     htmlFor="username"
                     className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Nom d'Utilisateur
                   </label>
-                  <div className="mt-2">
+                  <div className="mt-2 mr-5">
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                       <input
                         type="text"
@@ -186,14 +186,14 @@ const Register = () => {
                 </div>
 
                 {/* Champ pour l'email */}
-                <div className="sm:col-span-9">
+                <div className="sm:col-span-9 mr-5">
                   <label
                     htmlFor="email"
                     className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Email
                   </label>
-                  <div className="mt-2">
+                  <div className="mt-2 mr-5">
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                       <input
                         type="email"
@@ -210,14 +210,14 @@ const Register = () => {
                 </div>
 
                 {/* Champ pour le Mot de passe */}
-                <div className="sm:col-span-9">
+                <div className="sm:col-span-9 mr-5">
                   <label
                     htmlFor="password"
                     className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Mot de passe
                   </label>
-                  <div className="mt-2">
+                  <div className="mt-2 mr-5">
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                       <input
                         type="password"

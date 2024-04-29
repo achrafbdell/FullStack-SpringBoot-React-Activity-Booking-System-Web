@@ -31,7 +31,7 @@ const Navbar = () => {
     <nav className="bg-gray-900	">
       <div className="mx-auto max-w-8xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-20 items-center justify-between">
-          {/* ------------ Parite Gauche du Header --------------*/}
+          {/* ------------ Parite Gauche du Navbar --------------*/}
           {/* Logo*/}
           <div className="flex flex-shrink-0 items-center">
             <a href="/home">
@@ -60,7 +60,7 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* ------------ Parite Droite du Header --------------*/}
+          {/* ------------ Parite Droite du Navbar --------------*/}
           {/* Boutons de connexion/inscription/profil */}
           <div className="flex items-center">
             {/* Si utilisateur non connecté */}
