@@ -1,6 +1,7 @@
 package com.emsi.Site_de_Reservation.controller;
 
 import com.emsi.Site_de_Reservation.DTO.UserDTO;
+import com.emsi.Site_de_Reservation.DTO.UserUpdateDTO;
 import com.emsi.Site_de_Reservation.model.Role;
 import com.emsi.Site_de_Reservation.model.User;
 import com.emsi.Site_de_Reservation.repository.UserRepository;
@@ -9,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.ui.Model;
@@ -25,6 +27,8 @@ public class UserController {
     @Autowired
     private final UserService userService;
     private final UserRepository userRepository;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     public UserController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
@@ -33,14 +37,14 @@ public class UserController {
 
     @PostMapping("/user/register")
     public ResponseEntity<String> createUser(HttpServletRequest request,
-                                                 @RequestParam("first_name") String first_name,
-                                                 @RequestParam("last_name") String last_name,
-                                                 @RequestParam("username") String username,
-                                                 @RequestParam("email") String email,
-                                                 @RequestParam("password") String password,
-                                                 @RequestParam("user_avatar") MultipartFile user_avatar_file,
-                                                 @RequestParam("user_cover") MultipartFile user_cover_file,
-                                                 @RequestParam(value = "role", defaultValue = "USER") Role role) throws IOException, SQLException {
+                                             @RequestParam("first_name") String first_name,
+                                             @RequestParam("last_name") String last_name,
+                                             @RequestParam("username") String username,
+                                             @RequestParam("email") String email,
+                                             @RequestParam("password") String password,
+                                             @RequestParam("user_avatar") MultipartFile user_avatar_file,
+                                             @RequestParam("user_cover") MultipartFile user_cover_file,
+                                             @RequestParam(value = "role", defaultValue = "USER") Role role) throws IOException, SQLException {
 
         // Vérifier si le nom d'utilisateur existe déjà
         if (userService.existsByUsername(username)) {
@@ -51,25 +55,45 @@ public class UserController {
         if (userService.existsByEmail(email)) {
             return ResponseEntity.badRequest().body("E-mail déjà utilisé !");
         }
-            // Convertion du user avatar en bytes
-            byte[] avatar_bytes = user_avatar_file.getBytes();
-            Blob avatar_blob = new javax.sql.rowset.serial.SerialBlob(avatar_bytes);
+        // Convertion du user avatar en bytes
+        byte[] avatar_bytes = user_avatar_file.getBytes();
+        Blob avatar_blob = new javax.sql.rowset.serial.SerialBlob(avatar_bytes);
 
-            // Convertion du user cover en bytes
-            byte[] cover_bytes = user_cover_file.getBytes();
-            Blob cover_blob = new javax.sql.rowset.serial.SerialBlob(cover_bytes);
+        // Convertion du user cover en bytes
+        byte[] cover_bytes = user_cover_file.getBytes();
+        Blob cover_blob = new javax.sql.rowset.serial.SerialBlob(cover_bytes);
 
-            User user = new User();
-            user.setFirst_name(first_name);
-            user.setLast_name(last_name);
-            user.setUsername(username);
-            user.setEmail(email);
-            user.setPassword(password);
-            user.setUser_avatar(avatar_blob);
-            user.setUser_cover(cover_blob);
-            user.setRole(role);
-            userService.createUser(user);
-            return ResponseEntity.ok("Compte créer avec succées :)");
+        User user = new User();
+        user.setFirst_name(first_name);
+        user.setLast_name(last_name);
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setUser_avatar(avatar_blob);
+        user.setUser_cover(cover_blob);
+        user.setRole(role);
+        userService.createUser(user);
+        return ResponseEntity.ok("Compte créer avec succées :)");
+    }
+
+    @PutMapping("/user/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody UserUpdateDTO updatedUser) {
+        String hashedPassword = passwordEncoder.encode(updatedUser.getPassword());
+
+        return userRepository.findById(id)
+
+                .map(user -> {
+                    user.setFirst_name(updatedUser.getFirstName());
+                    user.setLast_name(updatedUser.getLastName());
+                    user.setUsername(updatedUser.getUsername());
+                    user.setEmail(updatedUser.getEmail());
+                    user.setPassword(hashedPassword);
+
+                    User savedUser = userRepository.save(user);
+                    return ResponseEntity.ok().body(savedUser);
+
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/user/{id}")
@@ -115,11 +139,20 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public String showUsers(Model model){
+    public String showUsers(Model model) {
         List<User> users = userRepository.findAll();
         model.addAttribute("users", users);
         return "users";
     }
+}
+
+
+
+
+
+
+
+
 
     /*
     @PostMapping(value = "/loginnnn", consumes = "application/json")
@@ -205,8 +238,5 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authorization header missing");
         }
     }
-
-*/
-
-
 }
+*/
