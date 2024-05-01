@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import logoImage from "../images/img_register.webp";
-import Navbar from "./Navbar";
 import {
   List,
   ListItem,
@@ -30,7 +29,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="mt-28" style={{ display: "flex", justifyContent: "center", height: "100vh" }}>
+    <div className="" style={{ display: "flex", justifyContent: "center", height: "100vh" }}>
       <Card className="w-96 p-5" style={{ width: "80%" }}>
         <List>
           <ListItem className="p-5">

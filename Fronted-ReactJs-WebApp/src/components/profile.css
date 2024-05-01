@@ -1,0 +1,29 @@
+.gradient-custom-2 {
+    margin-top: -7%;
+}
+
+.rounded-img-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  
+  
+  .rounded-img-container img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .custom-username{
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+  }
+
+
+  .custom-inputs{
+    margin-left: 40%;
+  }
+  
+    

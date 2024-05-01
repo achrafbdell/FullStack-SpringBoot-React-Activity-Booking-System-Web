@@ -2,30 +2,25 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom"; 
 import axios from "axios";
 import logoImage from "../images/lettering-lettering-time-to-travel-with-map-and-suitcase-text.webp";
-import Cookies from "js-cookie";
+import defaultAvatar from "../images/img_register.webp";
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
+  const [editedUser, setEditedUser] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const token = Cookies.get("token");
-      if (token) {
-        try {
-          const response = await axios.get("http://localhost:8080/user/profile", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          setUser(response.data);
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        }
+      try {
+        const response = await axios.get(`http://localhost:8080/user/4`);
+        setUser(response.data);
+        setEditedUser({ ...response.data });
+      } catch (error) {
+        console.error("Error fetching user data:", error);
       }
     };
-    fetchUserData(); // Call fetchUserData function
-  }, []); // Empty dependency array to ensure useEffect runs only once
 
+    fetchUserData();
+  }, []);
 
   return (
     <nav className="bg-gray-900	">
@@ -40,31 +35,18 @@ const Navbar = () => {
             {/* Categories */}
             <div className="flex items-center space-x-4">
               <a
-                href="/hebergements"
-                className="text-white px-3 py-3 ml-10 font-semibold hover:text-blue-400 hover:border-blue-400 border-b-2 border-transparent text-sm"
-              >
-                Hébergements
-              </a>
-              <a
-                href="/activites"
+                href="/home"
                 className="text-white px-3 py-3 ml-10 font-semibold hover:text-blue-400 hover:border-blue-400 border-b-2 border-transparent text-sm"
               >
                 Activités
               </a>
-              <a
-                href="/vols"
-                className="text-white px-3 py-3 ml-10 font-semibold hover:text-blue-400 hover:border-blue-400 border-b-2 border-transparent text-sm"
-              >
-                Vols
-              </a>
             </div>
           </div>
 
-          {/* ------------ Parite Droite du Navbar --------------*/}
-          {/* Boutons de connexion/inscription/profil */}
+          {/* Partie Droite du Navbar */}
           <div className="flex items-center">
-            {/* Si utilisateur non connecté */}
-            {!user && (
+            {/* Si l'utilisateur est connecté */}
+            {user && (
               <>
                 <Link
                   to="/register"
@@ -78,44 +60,36 @@ const Navbar = () => {
                 >
                   Se Connecter
                 </Link>
-                <Link to="/login">
-                  <img
-                    src="https://as2.ftcdn.net/v2/jpg/03/49/49/79/1000_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg"
-                    alt="Default Avatar"
-                    className="h-8 w-8 rounded-full cursor-pointer"
-                  />
-                </Link>
-              </>
-            )}
 
-            {/* Si l'utilisateur est connecté */}
-            {user && (
-              <div className="relative">
-                {/* Avatar */}
-                {user.image_avatar ? (
-                  <img
-                    src={user.image_avatar}
-                    alt="Avatar"
-                    className="h-8 w-8 rounded-full cursor-pointer"
-                  />
-                ) : (
-                  <img
-                    src="/path/to/default_avatar.png"
-                    alt="Default Avatar"
-                    className="h-8 w-8 rounded-full cursor-pointer"
-                  />
-                )}
+                <div className="relative">
+                  {/* Avatar */}
+                  {user.userAvatar ? (
+                    <Link to="/profile">
+                      <img
+                        src={`data:image/jpeg;base64, ${user.userAvatar}`}
+                        alt="Avatar"
+                        className="h-11 w-11 rounded-full cursor-pointer"
+                      />
+                    </Link>
+                  ) : (
+                    <img
+                      src={defaultAvatar}
+                      alt="Default Avatar"
+                      className="h-16 w-16 rounded-full cursor-pointer"
+                    />
+                  )}
 
-                {/* Menu déroulant du profil */}
-                <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg hidden">
-                  <span className="block px-4 py-2 text-gray-800">
-                    Profile: {user.username}
-                  </span>
-                  <button className="block px-4 py-2 text-gray-800 hover:bg-purple-500 hover:text-white w-full text-left">
-                    Déconnexion
-                  </button>
+                  {/* Menu déroulant du profil */}
+                  <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg hidden">
+                    <span className="block px-4 py-2 text-gray-800">
+                      Profile: {user.username}
+                    </span>
+                    <button className="block px-4 py-2 text-gray-800 hover:bg-purple-500 hover:text-white w-full text-left">
+                      Déconnexion
+                    </button>
+                  </div>
                 </div>
-              </div>
+              </>
             )}
           </div>
         </div>
