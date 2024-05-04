@@ -45,10 +45,7 @@ const Navbar = () => {
 
           {/* Partie Droite du Navbar */}
           <div className="flex items-center">
-            {/* Si l'utilisateur est connecté */}
-            {user && (
-              <>
-                <Link
+          <Link
                   to="/register"
                   className="text-white px-4 py-2 rounded-xl border-2 border-blue-700 bg-blue-700 hover:bg-transparent hover:border-blue-600 hover:border-2 mr-4 text-sm"
                 >
@@ -60,6 +57,11 @@ const Navbar = () => {
                 >
                   Se Connecter
                 </Link>
+                
+            {/* Si l'utilisateur est connecté */}
+            {user && (
+              <>
+    
 
                 <div className="relative">
                   {/* Avatar */}
