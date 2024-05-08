@@ -19,7 +19,7 @@ const Home = () => {
     const fetchActivities = async () => {
       try {
         // Example API endpoint to fetch activities
-        const response = await axios.get("http://example.com/api/activities");
+        const response = await axios.get("http:/http://localhost:8080/add/activity");
         setActivities(response.data);
       } catch (error) {
         console.error("Error fetching activities:", error);

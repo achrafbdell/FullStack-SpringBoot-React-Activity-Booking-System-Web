@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom"; 
 import axios from "axios";
-import logoImage from "../images/lettering-lettering-time-to-travel-with-map-and-suitcase-text.webp";
+import logoImage from "../images/logo_reservation_-removebg-preview.png";
 import defaultAvatar from "../images/img_register.webp";
-
 const Navbar = () => {
   const [user, setUser] = useState(null);
   const [editedUser, setEditedUser] = useState(null);
@@ -29,13 +28,12 @@ const Navbar = () => {
           {/* ------------ Parite Gauche du Navbar --------------*/}
           {/* Logo*/}
           <div className="flex flex-shrink-0 items-center">
-            <a href="/home">
-              <img className="h-12 w-auto" src={logoImage} alt="" />
+            <a href="/">
+              <img className="h-14 w-auto" src={logoImage} alt="" />
             </a>
-            {/* Categories */}
             <div className="flex items-center space-x-4">
               <a
-                href="/home"
+                href="/"
                 className="text-white px-3 py-3 ml-10 font-semibold hover:text-blue-400 hover:border-blue-400 border-b-2 border-transparent text-sm"
               >
                 Activités

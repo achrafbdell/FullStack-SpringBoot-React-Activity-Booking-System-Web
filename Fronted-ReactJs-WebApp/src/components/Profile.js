@@ -30,9 +30,9 @@ function Profile() {
     // Function to fetch user data from the backend
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/user/4`);
+        const response = await axios.get(`http://localhost:8080/user/3`);
         setUser(response.data);
-        setEditedUser({ ...response.data });
+        setEditedUser({ ...response.data })
       } catch (error) {
         console.error("Error fetching user data:", error);
       }

@@ -26,7 +26,7 @@ const Register = () => {
 
   const handleRegistration = async (formData) => {
     try {
-      const response = await axios.post("http://localhost:8080/user/signup", formData);
+      const response = await (axios.post("http://localhost:8080/user/register", formData));
       console.log("Response from server:", response.data)
       setSuccessMessage("Compte créé avec succès !");
     } catch (error) {
