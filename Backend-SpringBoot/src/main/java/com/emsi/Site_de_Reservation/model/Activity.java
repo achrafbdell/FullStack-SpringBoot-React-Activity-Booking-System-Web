@@ -2,6 +2,8 @@ package com.emsi.Site_de_Reservation.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.HashSet;
+import java.util.Set;
 
 import java.sql.Blob;
 import java.util.Date;
@@ -25,4 +27,7 @@ public class Activity {
     private double price;
     @Lob
     private Blob image;
+    @ManyToMany(mappedBy = "activities")
+    private Set<User> users = new HashSet<>();
+
 }
