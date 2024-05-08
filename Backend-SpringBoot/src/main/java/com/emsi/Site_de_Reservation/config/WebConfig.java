@@ -11,7 +11,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000") // Autoriser les requêtes provenant de ce domaine
-                .allowedMethods("GET", "POST", "PUT", "DELETE") // Autoriser les méthodes HTTP
+                .allowedMethods("POST", "GET", "PUT", "DELETE") // Autoriser les méthodes HTTP
                 .allowCredentials(true) // Autoriser les cookies, les autorisations, etc.
                 .allowedHeaders("*"); // Autoriser tous les en-têtes
     }

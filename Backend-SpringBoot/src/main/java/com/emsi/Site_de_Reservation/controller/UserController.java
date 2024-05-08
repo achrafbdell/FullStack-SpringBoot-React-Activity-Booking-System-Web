@@ -2,8 +2,10 @@ package com.emsi.Site_de_Reservation.controller;
 
 import com.emsi.Site_de_Reservation.DTO.UserDTO;
 import com.emsi.Site_de_Reservation.DTO.UserUpdateDTO;
+import com.emsi.Site_de_Reservation.model.Activity;
 import com.emsi.Site_de_Reservation.model.Role;
 import com.emsi.Site_de_Reservation.model.User;
+import com.emsi.Site_de_Reservation.repository.ActivityRepository;
 import com.emsi.Site_de_Reservation.repository.UserRepository;
 import com.emsi.Site_de_Reservation.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,10 +31,13 @@ public class UserController {
     private final UserRepository userRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private final ActivityRepository activityRepository;
 
-    public UserController(UserService userService, UserRepository userRepository) {
+    public UserController(UserService userService, UserRepository userRepository, ActivityRepository activityRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
+        this.activityRepository = activityRepository;
     }
 
     @PostMapping("/user/register")
@@ -144,10 +149,36 @@ public class UserController {
         model.addAttribute("users", users);
         return "users";
     }
+
+
+   /* @PostMapping("/user/{userId}/book/activity/{activityId}")
+    public ResponseEntity<String> bookActivity(
+            @PathVariable Long userId,
+            @PathVariable Long activityId,
+            @RequestParam String username,
+            @RequestParam String password
+    ) {
+        // Vérifier l'authentification de l'utilisateur ici (par exemple, via un service d'authentification)
+        // Si l'authentification réussit, continuer avec la réservation
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+
+        Activity activity = activityRepository.findById(activityId)
+                .orElseThrow(() -> new RuntimeException("Activity not found with id: " + activityId));
+
+        // Vérifier si l'utilisateur a déjà réservé cette activité
+        if (user.getActivities().contains(activity)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already reserved this activity.");
+        }
+
+        // Ajouter l'activité à la liste des activités de l'utilisateur
+        user.getActivities().add(activity);
+        userRepository.save(user);
+        return ResponseEntity.ok("Activity reserved successfully.");
+    } */
+
+
 }
-
-
-
 
 
 
