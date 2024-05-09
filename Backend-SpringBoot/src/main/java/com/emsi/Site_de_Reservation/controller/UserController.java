@@ -150,7 +150,7 @@ public class UserController {
         return "users";
     }
 
-
+}
    /* @PostMapping("/user/{userId}/book/activity/{activityId}")
     public ResponseEntity<String> bookActivity(
             @PathVariable Long userId,
@@ -176,15 +176,6 @@ public class UserController {
         userRepository.save(user);
         return ResponseEntity.ok("Activity reserved successfully.");
     } */
-
-
-}
-
-
-
-
-
-
     /*
     @PostMapping(value = "/loginnnn", consumes = "application/json")
     public User loginUUser(@RequestBody User user) {
@@ -224,33 +215,6 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur interne du serveur");
         }
         */
-
-
-
-   /* @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody LoginDTO loginDTO) {
-        String username = loginDTO.getUsername();
-        String password = loginDTO.getPassword();
-
-        Optional<User> existingUserOpt = userService.findByUsername(username);
-
-        if (existingUserOpt.isPresent()) {
-            User existingUser = existingUserOpt.get();
-
-            if (passwordEncoder.matches(password, existingUser.getPassword())) {
-                // Generate JWT token
-                String token = jwtUtil.generateToken(username, existingUser.isAdmin());
-
-                return ResponseEntity.ok(token);
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-            }
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
-        }
-    }
-*/
-
 
   /*  @GetMapping("/profile")
     public ResponseEntity<String> userProfile(HttpServletRequest request) {

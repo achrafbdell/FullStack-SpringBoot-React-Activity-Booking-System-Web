@@ -10,7 +10,7 @@ const Navbar = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/user/4`);
+        const response = await axios.get(`http://localhost:8080/user/1`);
         setUser(response.data);
         setEditedUser({ ...response.data });
       } catch (error) {
@@ -33,10 +33,10 @@ const Navbar = () => {
             </a>
             <div className="flex items-center space-x-4">
               <a
-                href="/"
+                href="/profile"
                 className="text-white px-3 py-3 ml-10 font-semibold hover:text-blue-400 hover:border-blue-400 border-b-2 border-transparent text-sm"
               >
-                Activités
+                Profile
               </a>
             </div>
           </div>
@@ -59,23 +59,23 @@ const Navbar = () => {
             {/* Si l'utilisateur est connecté */}
             {user && (
               <>
-    
-
                 <div className="relative">
                   {/* Avatar */}
                   {user.userAvatar ? (
                     <Link to="/profile">
+
                       <img
                         src={`data:image/jpeg;base64, ${user.userAvatar}`}
                         alt="Avatar"
                         className="h-11 w-11 rounded-full cursor-pointer"
                       />
+                   
                     </Link>
                   ) : (
                     <img
                       src={defaultAvatar}
                       alt="Default Avatar"
-                      className="h-16 w-16 rounded-full cursor-pointer"
+                      className="h-12 w-12 rounded-full cursor-pointer"
                     />
                   )}
 

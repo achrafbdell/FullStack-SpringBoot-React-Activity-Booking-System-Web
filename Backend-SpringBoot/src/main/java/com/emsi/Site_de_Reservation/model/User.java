@@ -30,7 +30,7 @@ public class User{
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
-    /*@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+   @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "user_activity", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "activity_id"))
-    private Set<Activity> activities = new HashSet<>();*/
+    private Set<Activity> activities = new HashSet<>();
 }

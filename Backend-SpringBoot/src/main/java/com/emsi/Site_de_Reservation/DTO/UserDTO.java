@@ -3,8 +3,6 @@ package com.emsi.Site_de_Reservation.DTO;
 import com.emsi.Site_de_Reservation.model.Role;
 import lombok.*;
 
-import java.sql.Blob;
-
 @Data
 @Builder
 @AllArgsConstructor
@@ -15,8 +13,8 @@ public class UserDTO {
     private String lastName;
     private String username;
     private String email;
-    private byte[] userAvatar; // Convert Blob to byte[]
-    private byte[] userCover; // Convert Blob to byte[]
+    private byte[] userAvatar;
+    private byte[] userCover;
     private Role role;
 }
 

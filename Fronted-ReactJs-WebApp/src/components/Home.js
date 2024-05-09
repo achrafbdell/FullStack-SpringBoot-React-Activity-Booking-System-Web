@@ -18,8 +18,7 @@ const Home = () => {
   useEffect(() => {
     const fetchActivities = async () => {
       try {
-        // Example API endpoint to fetch activities
-        const response = await axios.get("http:/http://localhost:8080/add/activity");
+        const response = await axios.get("http:/http://localhost:8080/activities");
         setActivities(response.data);
       } catch (error) {
         console.error("Error fetching activities:", error);
