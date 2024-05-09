@@ -1,6 +1,7 @@
 package com.emsi.Site_de_Reservation.controller;
 
 import com.emsi.Site_de_Reservation.DTO.UserDTO;
+import com.emsi.Site_de_Reservation.DTO.UserManageDTO;
 import com.emsi.Site_de_Reservation.DTO.UserUpdateDTO;
 import com.emsi.Site_de_Reservation.model.Activity;
 import com.emsi.Site_de_Reservation.model.Role;
@@ -23,6 +24,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class UserController {
@@ -148,6 +150,36 @@ public class UserController {
         List<User> users = userRepository.findAll();
         model.addAttribute("users", users);
         return "users";
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<UserManageDTO>> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        List<UserManageDTO> userDTOs = users.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(userDTOs, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            userRepository.delete(optionalUser.get());
+            return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    private UserManageDTO convertToDTO(User user) {
+        return UserManageDTO.builder()
+                .id(user.getId())
+                .firstName(user.getFirst_name())
+                .lastName(user.getLast_name())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .build();
     }
 
 }
