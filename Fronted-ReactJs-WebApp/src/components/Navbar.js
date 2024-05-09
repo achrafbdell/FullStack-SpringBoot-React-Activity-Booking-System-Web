@@ -10,7 +10,7 @@ const Navbar = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/user/1`);
+        const response = await axios.get(`http://localhost:8080/user/2`);
         setUser(response.data);
         setEditedUser({ ...response.data });
       } catch (error) {

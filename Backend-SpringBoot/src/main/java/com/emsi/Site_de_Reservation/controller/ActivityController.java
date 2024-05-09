@@ -106,6 +106,17 @@ public class ActivityController {
         return ResponseEntity.ok(activityDTOs);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteActivity(@PathVariable Long id) {
+        Optional<Activity> optionalActivity = activityRepository.findById(id);
+        if (optionalActivity.isPresent()) {
+            activityRepository.delete(optionalActivity.get());
+            return new ResponseEntity<>("Activity deleted successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Activity not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
 
 
 

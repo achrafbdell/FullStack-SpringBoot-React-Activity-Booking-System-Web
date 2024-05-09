@@ -90,7 +90,6 @@ const Register = () => {
                 </h1>
               </div>
 
-              {/* Display Success Message if successMessage is present and errorMessage is not */}
               {successMessage && (
                 <div
                   className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mt-5 mr-10"
@@ -101,7 +100,6 @@ const Register = () => {
                 </div>
               )}
 
-              {/* Display Error Message if errorMessage is present and successMessage is not */}
               {errorMessage && !successMessage && (
                 <div
                   className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-5 mr-10"

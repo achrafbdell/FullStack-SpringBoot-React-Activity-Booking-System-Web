@@ -181,7 +181,6 @@ public class UserController {
                 .email(user.getEmail())
                 .build();
     }
-
 }
    /* @PostMapping("/user/{userId}/book/activity/{activityId}")
     public ResponseEntity<String> bookActivity(

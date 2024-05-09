@@ -9,7 +9,7 @@ import {
   Avatar,
   Card,
   Typography,
-  Input, // Assure-toi que Input est correctement importé depuis la bibliothèque ou le module approprié
+  Input, 
 } from "@material-tailwind/react";
 
 const Home = () => {
@@ -38,8 +38,8 @@ const Home = () => {
                 src={logoImage}
                 style={{
                   borderRadius: "5%",
-                  width: "300px", // Largeur de l'image
-                  height: "180px", // Hauteur de l'image
+                  width: "300px", 
+                  height: "180px", 
                 }}
               />
             </ListItemPrefix>
@@ -75,8 +75,8 @@ const Home = () => {
                     </Typography>
                   </div>
                   <div>
-                    <Link to="/register" className="text-white px-4 py-2 rounded-xl border-2 border-blue-700 bg-blue-700 hover:bg-transparent hover:border-blue-600 hover:border-2 mr-4 text-sm">
-                      S'inscrire
+                    <Link to="/register" className="text-white px-4 py-2 ml-42 rounded-xl border-2 border-blue-700 bg-blue-700 hover:bg-transparent hover:border-blue-600 hover:border-2 mr-4 text-sm">
+                      Reserver
                     </Link>
                   </div>
                 </div>

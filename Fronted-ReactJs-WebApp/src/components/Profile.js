@@ -25,12 +25,13 @@ function Profile() {
     email: false,
     password: false,
   });
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false); 
 
   useEffect(() => {
-    // Function to fetch user data from the backend
+
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/user/1`);
+        const response = await axios.get(`http://localhost:8080/user/3`);
         setUser(response.data);
         setEditedUser({ ...response.data })
       } catch (error) {
@@ -61,14 +62,17 @@ function Profile() {
     };
     setValidationErrors(errors);
   
-    // Check if any required fields are empty
     if (Object.values(errors).some((error) => error)) {
-      return; // Prevent saving if any field is empty
+      return; 
     }
     try {
       await axios.put(`http://localhost:8080/user/${user.id}`, editedUser);
       setUser({ ...editedUser });
       setEditMode(false);
+      setShowSuccessMessage(true); 
+      setTimeout(() => {
+        setShowSuccessMessage(false); 
+      }, 3000);
     } catch (error) {
       console.error("Error updating user data:", error);
     }
@@ -105,6 +109,11 @@ function Profile() {
                   marginRight: "5%",
                 }}
               >
+                {showSuccessMessage && ( 
+                  <div className="text-center text-green-600 font-semibold">
+                    Modifications enregistrées !
+                  </div>
+                )}
                 <div className="d-flex justify-content-end text-center py-1">
                   <div
                     className="rounded-img-container"
@@ -199,8 +208,7 @@ function Profile() {
                       </div>
 
                       <div className="my-4 text-center">
-                        {" "}
-                        {/* Ajoutez la classe text-center ici */}
+            
                         <label htmlFor="editedUsername" style={{marginLeft:"-12%"}} className="font-medium leading-6 text-gray-900">Username </label>
                         <input
                           className="custom-inputs form-input mt-2 w-60 py-1 px-1 pl-2 block rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -225,8 +233,6 @@ function Profile() {
                       </div>
 
                       <div className="my-4 text-center">
-                        {" "}
-                        {/* Ajoutez la classe text-center ici */}
                         <label htmlFor="editedEmail" style={{marginLeft:"-15%"}} className="font-medium leading-6 text-gray-900">Email </label>
                         <input
                           className="form-input custom-inputs mt-2 block w-60 py-1 px-1 pl-2 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -251,8 +257,7 @@ function Profile() {
                       </div>
 
                       <div className="my-4 text-center mb-10">
-                        {" "}
-                        {/* Ajoutez la classe text-center ici */}
+            
                         <label htmlFor="editedPassword" style={{marginLeft:"-4%"}} className="font-medium leading-6 text-gray-900">Nouveau mot de passe </label>
                         <input
                           className="text-gray-900 form-input custom-inputs mt-2 block w-60 py-1 px-1 pl-2 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"

@@ -25,7 +25,7 @@ const UserManage = () => {
   const handleDelete = async (id) => {
     setLoading(true);
     try {
-      await axios.delete(`http://localhost:8080/delete/${id}`); // Endpoint modifié pour DELETE
+      await axios.delete(`http://localhost:8080/delete/${id}`); 
       fetchUsers();
     } catch (error) {
       setError('Error deleting user');
