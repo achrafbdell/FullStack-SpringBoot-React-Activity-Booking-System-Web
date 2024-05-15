@@ -13,7 +13,7 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    cd ./Fronted-ReactJS-WebApp
+    cd Fronted-ReactJS-WebApp
     npm install
     npm run build
   displayName: 'npm install and build'
