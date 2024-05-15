@@ -13,7 +13,10 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-   npm cache clean --force
+    cd Fronted-ReactJs-WebApp
+    npm install
+    npm run build
+    npm cache clean --force
     echo "Current directory: $(pwd)"
     ls -la   # List files in the current directory for debugging
     npm install --verbose
