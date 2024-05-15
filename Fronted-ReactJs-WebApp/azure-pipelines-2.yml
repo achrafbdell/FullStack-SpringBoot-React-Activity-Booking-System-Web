@@ -13,6 +13,9 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    npm install
-    npm run build
+   npm cache clean --force
+    echo "Current directory: $(pwd)"
+    ls -la   # List files in the current directory for debugging
+    npm install --verbose
+    npm run build --verbose
   displayName: 'npm install and build'
